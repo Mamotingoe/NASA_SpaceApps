@@ -27,6 +27,21 @@
         { "name": "Sample collection", "date": "2024-01-10" },
         { "name": "ISS experiment start", "date": "2024-02-01" },
         { "name": "Return to Earth", "date": "2024-03-01" }
+      ],
+      "launch_info": {
+        "launch_date": "2023-03-03",
+        "rocket_type": "Falcon 9",
+        "launch_location": "Cape Canaveral"
+      },
+      "return_info": {
+        "return_date": "2023-03-15",
+        "landing_location": "Pacific Ocean"
+      },
+      "related_experiments": [
+        {
+          "experiment_id": "OSD-665",
+          "experiment_name": "Rodent Research-23"
+        }
       ]
     }
   ]

@@ -1,0 +1,38 @@
+{
+  "experiments": [
+      {
+          "id": "EXPERIMENT_ID",
+          "name": "EXPERIMENT_NAME",
+          "subjects": {
+              "group_count": "NUMBER_OF_GROUPS",
+              "subjects_per_group": "SUBJECTS_PER_GROUP",
+              "treatment": "TREATMENT_DESCRIPTION"
+          },
+          "timeline_events": [
+              {
+                  "date": "YYYY-MM-DD",
+                  "name": "EVENT_DESCRIPTION"
+              },
+              {
+                  "date": "YYYY-MM-DD",
+                  "name": "EVENT_DESCRIPTION"
+              }
+          ],
+          "launch_info": {
+              "launch_date": "YYYY-MM-DD",
+              "rocket_type": "ROCKET_TYPE",
+              "launch_location": "LAUNCH_LOCATION"
+          },
+          "return_info": {
+              "return_date": "YYYY-MM-DD",
+              "landing_location": "LANDING_LOCATION"
+          },
+          "related_experiments": [
+              {
+                  "experiment_id": "RELATED_EXPERIMENT_ID",
+                  "experiment_name": "RELATED_EXPERIMENT_NAME"
+              }
+          ]
+      }
+  ]
+}
