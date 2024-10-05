@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Space Experiment Visualization</title>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+</head>
+<body>
+    <h1>Experiment Overview</h1>
+    <div id="suggestions"></div>
+
+    <h2>Interactive Timeline</h2>
+    <div id="plot"></div>
+
+    <script>
+        // Fetch and display GPT-4 suggestions
+        fetch('/api/suggest_visualization/OSD-379')
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('suggestions').innerText = `Suggested Visualizations: ${data.suggestions}`;
+            });
+
+        // Fetch and display Plotly timeline chart
+        fetch('/api/generate_plot/OSD-379')
+            .then(response => response.json())
+            .then(plotData => {
+                Plotly.newPlot('plot', plotData.data, plotData.layout);
+            });
+    </script>
+</body>
+</html>
