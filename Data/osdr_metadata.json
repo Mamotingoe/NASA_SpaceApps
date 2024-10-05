@@ -1,0 +1,33 @@
+{
+  "experiments": [
+    {
+      "id": "OSD-379",
+      "name": "Rodent Research Reference Mission-1",
+      "subjects_per_group": 10,
+      "treatment": "Radiation Exposure",
+      "pre_launch_events": ["Rodent preparation", "Loading onto ISS"],
+      "post_return_events": ["Sample recovery", "Analysis on Earth"],
+      "similar_experiments": ["Rodent Research-22", "Rodent Research-23"],
+      "timeline_events": [
+        { "name": "Rodent preparation", "date": "2023-04-10" },
+        { "name": "ISS launch", "date": "2023-05-01" },
+        { "name": "Experiment start", "date": "2023-05-05" },
+        { "name": "Return to Earth", "date": "2023-07-01" }
+      ]
+    },
+    {
+      "id": "OSD-665",
+      "name": "Rodent Research-23",
+      "subjects_per_group": 8,
+      "treatment": "Muscle Atrophy Study",
+      "pre_launch_events": ["Preparation of samples", "Space acclimation"],
+      "post_return_events": ["Post-flight analysis", "Tissue extraction"],
+      "similar_experiments": ["Rodent Research-1", "Rodent Research-5"],
+      "timeline_events": [
+        { "name": "Sample collection", "date": "2024-01-10" },
+        { "name": "ISS experiment start", "date": "2024-02-01" },
+        { "name": "Return to Earth", "date": "2024-03-01" }
+      ]
+    }
+  ]
+}
