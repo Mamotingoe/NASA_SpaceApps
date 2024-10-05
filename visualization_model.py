@@ -1,52 +1,22 @@
-import openai
+import plotly.express as px
 import plotly.graph_objects as go
-import os
-
-# Load OpenAI API key from environment variable
-openai.api_key = os.getenv("OPENAI_API_KEY")
 
 def generate_visualization_suggestions(experiment_data):
-    """
-    Uses GPT-4 to suggest the best types of visualizations for the given experiment data.
-    """
-    prompt = f"""
-    Based on the following metadata of a biological space experiment, suggest the most appropriate
-    data visualizations (charts, 3D models, timelines, etc.):
+    suggestions = []
 
-    Experiment Data: {experiment_data}
+    if 'assays' in experiment_data:
+        suggestions.append("Consider a bar chart to visualize assay results.")
+    if 'factors' in experiment_data:
+        suggestions.append("A scatter plot might help show the correlation between factors.")
 
-    Suggest visual types and justify your choices.
-    """
-
-    response = openai.Completion.create(
-        model="gpt-4",
-        prompt=prompt,
-        max_tokens=150
-    )
-
-    return response.choices[0].text
+    return suggestions
 
 def generate_interactive_plot(experiment_data):
-    """
-    Generates a simple Plotly chart based on the experiment timeline events.
-    """
-    timeline_events = experiment_data['timeline_events']
+    # Check for the required data in experiment_data
+    if 'some_data' not in experiment_data:  # Replace 'some_data' with the actual key
+        print("Experiment data received:", experiment_data)  # Log the entire experiment_data
+        raise ValueError("No data to generate plot")
 
-    # Create a timeline plot
-    fig = go.Figure(
-        data=[go.Scatter(x=[event['date'] for event in timeline_events],
-                         y=[event['name'] for event in timeline_events],
-                         mode='lines+markers',
-                         marker=dict(size=10),
-                         line=dict(color='royalblue', width=3))]
-    )
-
-    fig.update_layout(
-        title="Experiment Timeline",
-        xaxis_title="Date",
-        yaxis_title="Event",
-        xaxis=dict(type='category'),
-        yaxis=dict(categoryorder='category ascending')
-    )
-
+    # Create the plot if the required data is present
+    fig = px.line(experiment_data['some_data'], x='time', y='value', title='Experiment Data Over Time')
     return fig

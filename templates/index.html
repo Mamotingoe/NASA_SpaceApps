@@ -3,109 +3,43 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Space Experiment Visualization</title>
-    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-    <script src="https://threejs.org/build/three.js"></script> <!-- Include Three.js -->
-    <link rel="stylesheet" href="static/css/styles.css"> <!-- Link to CSS -->
+    <title>NASA OSDR Visualizer</title>
+    <link rel="stylesheet" href="/static/css/styles.css">
 </head>
 <body>
-    <header>
-        <h1>Space Biological Experiments</h1>
-    </header>
+    <div class="container">
+        <header>
+            <h1>NASA OSDR Visualization</h1>
+        </header>
 
-    <h2>Experiment Overview</h2>
-    <div id="suggestions"></div>
+        <section id="search-section">
+            <h2>Search for Experiment Metadata</h2>
+            <input type="text" id="experiment-id" placeholder="Enter Experiment ID (e.g., OSD-379)">
+            <button id="fetch-metadata-btn">Fetch Metadata</button>
+        </section>
 
-    <h2>Interactive Timeline</h2>
-    <div id="plot"></div>
-    <div id="timeline-container"></div>
+        <section id="metadata-section">
+            <h2>Experiment Metadata</h2>
+            <div id="metadata-content">
+                <!-- Fetched metadata will be displayed here -->
+            </div>
+        </section>
 
-    <h2>3D Visualizations</h2>
-    <div id="3d-visualization-container"></div>
+        <section id="visualization-section">
+            <h2>Visualization Suggestions</h2>
+            <div id="suggestions-content">
+                <!-- Visualization suggestions will be displayed here -->
+            </div>
+        </section>
 
-    <script>
-        // Fetch and display GPT-4 suggestions
-        fetch('/api/suggest_visualization/OSD-379')
-            .then(response => response.json())
-            .then(data => {
-                document.getElementById('suggestions').innerText = `Suggested Visualizations: ${data.suggestions}`;
-            });
+        <section id="plot-section">
+            <h2>Generated Plot</h2>
+            <div id="plot-content">
+                <!-- Generated plot will be displayed here -->
+            </div>
+        </section>
+    </div>
 
-        // Fetch and display Plotly timeline chart
-        fetch('/api/generate_plot/OSD-379')
-            .then(response => response.json())
-            .then(plotData => {
-                Plotly.newPlot('plot', plotData.data, plotData.layout);
-            });
-
-        // Fetch experiment data and render visualizations
-        fetch("/api/experiments")
-            .then(response => response.json())
-            .then(data => {
-                renderDataVisualizations(data.experiments);
-                data.experiments.forEach(exp => {
-                    renderTimeline(exp);
-                    load3DModel('static/3d_models/model1.glb'); // Load a 3D model for visualization
-                });
-            });
-
-        function renderDataVisualizations(experiments) {
-            const container = document.getElementById("experiment-container");
-            experiments.forEach(exp => {
-                const expDiv = document.createElement("div");
-                expDiv.className = "experiment";
-                expDiv.innerHTML = `
-                    <h2>${exp.name}</h2>
-                    <p>Treatment: ${exp.treatment}</p>
-                    <p>Subjects per group: ${exp.subjects_per_group}</p>
-                    <h3>Pre-launch Events:</h3>
-                    <ul>${exp.pre_launch_events.map(event => `<li>${event}</li>`).join('')}</ul>
-                    <h3>Post-return Events:</h3>
-                    <ul>${exp.post_return_events.map(event => `<li>${event}</li>`).join('')}</ul>
-                    <h3>Timeline Events:</h3>
-                    <ul>${exp.timeline_events.map(event => `<li>${event.name} on ${event.date}</li>`).join('')}</ul>`;
-                container.appendChild(expDiv);
-            });
-        }
-
-        function renderTimeline(exp) {
-            const timelineContainer = document.getElementById("timeline-container");
-            const timelineDiv = document.createElement("div");
-            timelineDiv.className = "timeline";
-            timelineDiv.innerHTML = `<h3>${exp.name} Timeline</h3>`;
-
-            exp.timeline_events.forEach(event => {
-                const eventItem = document.createElement("div");
-                eventItem.className = "timeline-event";
-                eventItem.innerHTML = `<strong>${event.date}</strong>: ${event.name}`;
-                timelineDiv.appendChild(eventItem);
-            });
-
-            timelineContainer.appendChild(timelineDiv);
-        }
-
-        function load3DModel(modelPath) {
-            const scene = new THREE.Scene();
-            const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-            const renderer = new THREE.WebGLRenderer();
-
-            renderer.setSize(window.innerWidth, window.innerHeight);
-            document.getElementById("3d-visualization-container").appendChild(renderer.domElement);
-
-            const loader = new THREE.GLTFLoader();
-            loader.load(modelPath, function(gltf) {
-                scene.add(gltf.scene);
-                camera.position.z = 5; // Set camera position
-                animate();
-            }, undefined, function(error) {
-                console.error(error);
-            });
-
-            function animate() {
-                requestAnimationFrame(animate);
-                renderer.render(scene, camera);
-            }
-        }
-    </script>
+    <script src="/static/js/main.js"></script>
 </body>
 </html>
